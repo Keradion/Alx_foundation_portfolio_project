@@ -20,7 +20,7 @@ class Expense(BaseModel):
 
         """
 
-    def calculate_witdrawn(self):
+    def calculate_witdrawal(self):
         """
            Method That Deducts An Amount From Current
            Ending Balance

@@ -20,4 +20,7 @@ class User(BaseModel):
     age = 0
     city = ""
     country = ""
+    email = ""
     phone_number = ""
+    user_name = ""
+    __password = ""
