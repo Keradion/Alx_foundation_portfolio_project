@@ -1,0 +1,9 @@
+{% extends 'layout.html' %}
+{% block content %}
+        {% for expense in expenses %}
+	    <p> {{expense.Date}} </p>
+	    <p> {{expense.Amount}} </p>
+	    <p> {{expense.Category}} </p>
+	    <p> {{expense.Reason}} </p>
+	{% endfor %}
+{% endblock content %}
