@@ -1,9 +1,13 @@
-from mezgebe import app
+from mezgebe import app, db, bcrypt
+from mezgebe.models import User
 from flask import render_template, flash, redirect, url_for
 from mezgebe.forms import UserRegisterationForm, UserLoginForm
 from mezgebe.models import User, Expense, Category
+from flask_login import login_user
 
 
+
+expenses = [ {'name' : 'daniel'} ]
 @app.route('/')
 @app.route('/home')
 def home():
@@ -22,8 +26,17 @@ def register():
     """ A Route To Handle a New User Registeration Process """
     registeration_form = UserRegisterationForm()
     if registeration_form.validate_on_submit():
-        flash('New User Account Created Successfully!', 'success')
-        return redirect(url_for('home'))
+        hashed_password = bcrypt.generate_password_hash(registeration_form.password.data).decode('utf-8')
+        new_user = User(user_name=registeration_form.user_name.data, 
+                        first_name=registeration_form.first_name.data,
+                        last_name=registeration_form.last_name.data,
+                        email=registeration_form.email.data,
+                        password=hashed_password
+                        )
+        db.session.add(new_user)
+        db.session.commit()
+        flash('Account has been created and you can now login!', 'success')
+        return redirect(url_for('login'))
     return render_template('registeration.html', title='Register', form=registeration_form)
 
 
@@ -31,4 +44,11 @@ def register():
 def login():
     """ A Route To Handle a User Login Process """
     login_form = UserLoginForm()
-    return render_template('Login.html', form=login_form)
+    if login_form.validate_on_submit():
+        user = User.query.filter_by(email=login_form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, login_form.password.data):
+            login_user(user, remember=login_form.remember_me.data)
+            return redirect(url_for('home'))
+        else:
+            flash('Invalid credential. Please check email or password!')
+    return render_template('login.html', form=login_form)

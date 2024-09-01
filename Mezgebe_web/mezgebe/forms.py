@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """
 """
+from mezgebe.models import User
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
-from wtforms.validators import DataRequired, Length, Email, EqualTo
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 
 
 
@@ -23,7 +24,24 @@ class UserRegisterationForm(FlaskForm):
     password = PasswordField('New Password',validators=[DataRequired()])
     confirm_password = PasswordField('Retype Your Password',
                                      validators=[DataRequired(), EqualTo('password')])
-    submit_button = SubmitField('Sign Up') 
+    submit_button = SubmitField('Sign Up')
+
+    def validate_user_name(self, user_name):
+        """
+          Prevent user name repication in account creation
+        """
+        user = User.query.filter_by(user_name=user_name.data).first()
+        if user:
+            raise ValidationError('User name already taken. Please user another user name')
+
+
+    def validate_email(self, email):
+        """
+          Prevent Email relplication in account creation
+        """
+        email = User.query.filter_by(email=email.data).first()
+        if email:
+            raise ValidationError('Email already taken. Please use another email')
 
 
 
