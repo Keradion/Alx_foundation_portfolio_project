@@ -1,12 +1,7 @@
-from flask import Flask, render_template, flash, redirect, url_for
-from forms import UserRegisterationForm, UserLoginForm
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
-
-app = Flask(__name__)
-app.config['SECRET_KEY'] = '15acbc2e1b59e2e04cb76ed5a2c9b9f3'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-db = SQLAlchemy(app)
+from mezgebe import app
+from flask import render_template, flash, redirect, url_for
+from mezgebe.forms import UserRegisterationForm, UserLoginForm
+from mezgebe.models import User, Expense, Category
 
 
 @app.route('/')
@@ -37,7 +32,3 @@ def login():
     """ A Route To Handle a User Login Process """
     login_form = UserLoginForm()
     return render_template('Login.html', form=login_form)
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
