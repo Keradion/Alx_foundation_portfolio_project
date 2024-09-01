@@ -1,17 +1,12 @@
 from flask import Flask, render_template, flash, redirect, url_for
 from forms import UserRegisterationForm, UserLoginForm
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
+
 app = Flask(__name__)
-
 app.config['SECRET_KEY'] = '15acbc2e1b59e2e04cb76ed5a2c9b9f3'
-
-expenses = [
-        {
-            'Date':'8/24/2024',
-            'Amount': '2464',
-            'Reason': 'Gym subscription',
-            'Category': 'Entertainmnet'
-        }
-        ]
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+db = SQLAlchemy(app)
 
 
 @app.route('/')
