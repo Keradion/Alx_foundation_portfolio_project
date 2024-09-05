@@ -35,26 +35,10 @@ class Expense(db.Model):
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     description = db.Column(db.String(1024), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
 
     def __repr__(self):
         """
           Custom output for class Expense
         """
         return f"Expense('{self.description}', '{self.date}', '{self.amount}')"
-
-
-class Category(db.Model):
-    """
-       Define Attributes for Category Class
-    """
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20), nullable=False)
-    category_expenses = db.relationship('Expense', backref='category')
-
-    def __repr__(self):
-        """
-          Custom output for class Category
-        """
-        return f"Category('{self.name}')"
 
