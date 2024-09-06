@@ -3,7 +3,7 @@
 """
 from mezgebe.models import User
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 
 
@@ -57,3 +57,14 @@ class UserLoginForm(FlaskForm):
     password = PasswordField('New Password',validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
     submit_button = SubmitField('Login')
+
+
+class NewExpenseForm(FlaskForm):
+    """
+      Class Define Form / Fields To Handle Create New Expense 
+      Operation By The User
+
+    """
+    amount = StringField('Expense Amount', validators=[DataRequired()])
+    description = TextAreaField('Expense Reason',  validators=[DataRequired()])
+    submit_button = SubmitField('Add Expense')

@@ -1,9 +1,11 @@
 {% extends 'layout.html' %}
 {% block content %}
         {% for expense in expenses %}
-	    <p> {{expense.Date}} </p>
-	    <p> {{expense.Amount}} </p>
-	    <p> {{expense.Category}} </p>
-	    <p> {{expense.Reason}} </p>
+	<p> Expense Amount </p>
+	<p> {{expense.amount}} </p>
+	<p> Reason of Expense </p>
+	<p> {{expense.description}} </p>
+	<p> Date of Expense </P>
+	<P> {{expense.date.strftime('%Y-%m-%d')}} </p>
 	{% endfor %}
 {% endblock content %}

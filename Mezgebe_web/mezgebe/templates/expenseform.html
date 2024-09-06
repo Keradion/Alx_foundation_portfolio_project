@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="register_form">
+	    <form method="POST" action="">
+		    {{ form.hidden_tag() }}
+		    <fieldset class="fields">
+			    <legend class="legends" style=color:red> 
+				    Add New Expense  
+			</legend>
+		<div class="fileds">
+			 {{ form.amount.label(class="form-fileds") }}
+
+                        {% if form.amount.errors %}
+                            <div>
+                                 {{ form.amount(class="form-fields is-invalid") }}
+                                 {% for error in form.amount.errors %}
+                                 <span> {{ error }} </span>
+                                 {% endfor %}
+                         </div>
+                        {% else %}
+                           {{ form.amount(class="form-fields") }}
+                         {% endif %}
+                </div>
+
+		<div class="fileds">
+			  {{ form.description.label(class="form-fileds") }}
+
+                        {% if form.description.errors %}
+                            <div>
+                                 {{ form.description(class="form-fields is-invalid") }}
+                                 {% for error in form.description.errors %}
+                                 <span> {{ error }} </span>
+                                 {% endfor %}
+                         </div>
+                        {% else %}
+                           {{ form.description(class="form-fields") }}
+                         {% endif %}
+                </div>
+
+		<div class="fileds">
+                        {{ form.submit_button(class="form-fields") }}
+                </div>
+
+		    </fieldset>
+	    </form>
+    </div>
+{% endblock content %}

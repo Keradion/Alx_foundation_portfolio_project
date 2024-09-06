@@ -1,24 +1,19 @@
 from mezgebe import app, db, bcrypt
 from mezgebe.models import User
 from flask import render_template, flash, redirect, url_for
-from mezgebe.forms import UserRegisterationForm, UserLoginForm
-from mezgebe.models import User, Expense, Category
+from mezgebe.forms import UserRegisterationForm, UserLoginForm, NewExpenseForm
+from mezgebe.models import User, Expense
 from flask_login import login_user, logout_user, current_user, login_required 
 
 
 
-expenses = [ {'name' : 'daniel'} ]
 @app.route('/')
 @app.route('/home')
+@login_required
 def home():
     """ A Route To Handle Home Page For a User """
+    expenses = Expense.query.filter_by(user_id=current_user.id).all()
     return render_template('home.html', expenses=expenses, title='Home Page')
-
-
-@app.route('/about')
-def about():
-    """ A Route To Handle About Page """
-    return render_template('about.html', title='About Page')
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -65,6 +60,23 @@ def logout():
     """ A Route TO Handle a User Logout Process """
     logout_user()
     return redirect(url_for('home'))
+
+
+@app.route('/expense/new_expense',  methods=['GET', 'POST'])
+@login_required
+def add_expense():
+    """ A Route To Handle a Process To Create a New Expense By a User """
+    new_expense_form = NewExpenseForm()
+    if new_expense_form.validate_on_submit():
+        new_expense = Expense(amount=new_expense_form.amount.data,
+                              description=new_expense_form.description.data,
+                              user_id=current_user.id)
+        db.session.add(new_expense)
+        db.session.commit()
+        flash('New Expense Added Successfully', 'success')
+        return redirect(url_for('home'))
+    return render_template('expenseform.html', form=new_expense_form)
+
 
 @app.route('/account')
 @login_required
