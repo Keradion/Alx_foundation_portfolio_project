@@ -1,6 +1,6 @@
 from mezgebe import app, db, bcrypt
 from mezgebe.models import User
-from flask import render_template, flash, redirect, url_for, abort
+from flask import render_template, flash, redirect, url_for, abort, request
 from mezgebe.forms import UserRegisterationForm, UserLoginForm, NewExpenseForm
 from mezgebe.models import User, Expense
 from flask_login import login_user, logout_user, current_user, login_required 
@@ -54,12 +54,13 @@ def login():
 
 
 
-
 @app.route('/Logout')
 def logout():
     """ A Route TO Handle a User Logout Process """
     logout_user()
     return redirect(url_for('home'))
+
+
 
 
 @app.route('/expense/new_expense',  methods=['GET', 'POST'])
@@ -77,12 +78,36 @@ def add_expense():
         return redirect(url_for('home'))
     return render_template('expenseform.html', form=new_expense_form)
 
+
+
 @app.route('/expense/<int:expense_id>')
 @login_required
 def expense(expense_id):
     """ Retrive an expense associated with a given expense_id """
     expense = Expense.query.filter_by(id=expense_id).all()
     return render_template('expense.html', expense=expense[0])
+
+
+
+@app.route('/expense/<int:expense_id>/update', methods=['GET', 'POST'])
+@login_required
+def update_expense(expense_id):
+    """ Update An Expense Associated With a Given expense_id """
+    expense = Expense.query.filter_by(id=expense_id).all()
+    if expense[0].user_id != current_user.id:
+        abort(403)
+    new_expense_form = NewExpenseForm()
+    if new_expense_form.validate_on_submit():
+        expense[0].amount = new_expense_form.amount.data
+        expense[0].description = new_expense_form.description.data
+        db.session.commit()
+        flash('Your Expense has been updated successfully!', 'success')
+        return redirect(url_for('expense', expense_id=expense[0].id))
+    elif request.method == 'GET':
+        new_expense_form.amount.data = expense[0].amount
+        new_expense_form.description.data = expense[0].description
+    return render_template('expenseform.html', form=new_expense_form)
+
 
 
 @app.route('/account')
