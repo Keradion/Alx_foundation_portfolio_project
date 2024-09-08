@@ -1,0 +1,8 @@
+{% extends 'layout.html' %}
+{% block content %}
+  <p> Expense Amount </p>
+  <p> {{expense.amount}} </p>
+  <p> Reason of Expense </p>
+  <p> {{expense.description}} </p>
+  <P> {{expense.date.strftime('%Y-%m-%d')}} </p>
+{% endblock content %}

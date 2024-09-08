@@ -7,7 +7,7 @@
 			    <legend class="legends" style=color:red> 
 				    Add New Expense  
 			</legend>
-		<div class="fileds">
+		<div class="fileds" style=margin-bottom:10px>
 			 {{ form.amount.label(class="form-fileds") }}
 
                         {% if form.amount.errors %}
@@ -22,7 +22,7 @@
                          {% endif %}
                 </div>
 
-		<div class="fileds">
+		<div class="fileds" style=margin-bottom:10px>
 			  {{ form.description.label(class="form-fileds") }}
 
                         {% if form.description.errors %}

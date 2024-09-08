@@ -1,6 +1,6 @@
 from mezgebe import app, db, bcrypt
 from mezgebe.models import User
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, abort
 from mezgebe.forms import UserRegisterationForm, UserLoginForm, NewExpenseForm
 from mezgebe.models import User, Expense
 from flask_login import login_user, logout_user, current_user, login_required 
@@ -76,6 +76,13 @@ def add_expense():
         flash('New Expense Added Successfully', 'success')
         return redirect(url_for('home'))
     return render_template('expenseform.html', form=new_expense_form)
+
+@app.route('/expense/<int:expense_id>')
+@login_required
+def expense(expense_id):
+    """ Retrive an expense associated with a given expense_id """
+    expense = Expense.query.filter_by(id=expense_id).all()
+    return render_template('expense.html', expense=expense[0])
 
 
 @app.route('/account')
