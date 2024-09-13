@@ -1,11 +1,8 @@
-#!/usr/bin/python3
-"""
-"""
 from mezgebe.models import User
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-
+from flask_login import current_user
 
 
 class UserRegisterationForm(FlaskForm):
@@ -18,7 +15,7 @@ class UserRegisterationForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired() ])
     user_name = StringField('Username',
-                            validators=[DataRequired(), Length(min=5, max=10)]) 
+                            validators=[DataRequired(), Length(min=5, max=10)])
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
     password = PasswordField('New Password',validators=[DataRequired()])
@@ -47,7 +44,7 @@ class UserRegisterationForm(FlaskForm):
 
 class UserLoginForm(FlaskForm):
     """
-       Class Define Form / Fields Necessary During 
+       Class Define Form / Fields Necessary During
        User Login Process
 
        - Extends FlaskForm
@@ -59,12 +56,36 @@ class UserLoginForm(FlaskForm):
     submit_button = SubmitField('Login')
 
 
-class NewExpenseForm(FlaskForm):
-    """
-      Class Define Form / Fields To Handle Create New Expense 
-      Operation By The User
 
+class PasswordResetForm(FlaskForm):
     """
-    amount = StringField('Expense Amount', validators=[DataRequired()])
-    description = TextAreaField('Expense Reason',  validators=[DataRequired()])
-    submit_button = SubmitField('Add Expense')
+       Class Defone Form / Fields Necessary During
+       Password Reset Process by a User
+
+       - Extends FlaskForm
+    """
+    email = StringField('Email',
+                        validators=[DataRequired(), Email()])
+    submit_button = SubmitField('Reset Password')
+
+    def validate_email(self, email):
+        """
+          Prevent Email relplication in account creation
+        """
+        email = User.query.filter_by(email=email.data).first()
+        if not email:
+            raise ValidationError('Email does not exit. Please create a New Account.')
+
+
+
+class PasswordChangeForm(FlaskForm):
+    """
+       Class Defone Form / Fields Necessary During
+       Password Change Process by a User
+
+       - Extends FlaskForm
+    """
+    password = PasswordField('New Password',validators=[DataRequired()])
+    confirm_password = PasswordField('Retype New Password',
+                                     validators=[DataRequired(), EqualTo('password')])
+    submit_button = SubmitField('Change Password')

@@ -1,12 +1,15 @@
 from datetime import datetime
-from mezgebe import db, login_manager
+from mezgebe import db, login_manager, app
 from flask_login import UserMixin
 from uuid import uuid4
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+
 
 @login_manager.user_loader
 def load_user(user_id):
     user = User.query.get(int(user_id))
     return user
+
 
 class User(db.Model, UserMixin):
     """
@@ -20,11 +23,31 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(100), nullable=False)
     expenses = db.relationship('Expense', backref='user')
 
+    def get_reset_token(self, duration_in_sec=1024):
+        """ Return Password Reset Token """
+        serializer = Serializer(app.config['SECRET_KEY'], duration_in_sec)
+        token = serializer.dumps({'user_id': (self.id)})
+        return token.decode('utf-8')
+
+
+    @staticmethod
+    def verify_token(token):
+        """ Verify Reset Token validity """
+        serializer = Serializer(app.config['SECRET_KEY'])
+        try:
+            user_id = serializer.loads(token)['user_id']
+            return User.query.filter_by(id=user_id)
+        except:
+            return None
+
+
     def __repr__(self):
         """
           Custom output for class User
         """
         return f"User('{self.first_name}', '{self.last_name}', '{self.user_name}')"
+
+
 
 class Expense(db.Model):
     """

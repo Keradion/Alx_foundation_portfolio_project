@@ -6,6 +6,7 @@
 	<p> Reason of Expense </p>
 	<p> {{expense.description}} </p>
 	<P> {{expense.date.strftime('%Y-%m-%d')}} </a></p>
-	<P> <a href="{{ url_for('expense', expense_id=expense.id) }}"> Manage Expense </a> <p>
+	<P> <a href="{{ url_for('expenses.expense', expense_id=expense.id) }}"
+		> Manage Expense </a> <p>
 	{% endfor %}
 {% endblock content %}

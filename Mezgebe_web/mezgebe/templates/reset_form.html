@@ -5,9 +5,9 @@
 		    {{ form.hidden_tag() }}
 		    <fieldset class="fields">
 			    <legend class="legends" style=color:red> 
-				    Login  
+				    Password Reset Form 
 			</legend>
-		<div class="fileds">
+		<div class="fileds" style=padding-top:10px;padding-bottom:30px;>
 			 {{ form.email.label(class="form-fileds") }}
 
                         {% if form.email.errors %}
@@ -23,29 +23,10 @@
                 </div>
 
 		<div class="fileds">
-			  {{ form.password.label(class="form-fileds") }}
-
-                        {% if form.password.errors %}
-                            <div>
-                                 {{ form.password(class="form-fields is-invalid") }}
-                                 {% for error in form.password.errors %}
-                                 <span> {{ error }} </span>
-                                 {% endfor %}
-                         </div>
-                        {% else %}
-                           {{ form.password(class="form-fields") }}
-                         {% endif %}
-                </div>
-
-		<div class="fileds">
                         {{ form.submit_button(class="form-fields") }}
                 </div>
 
 		    </fieldset>
 	    </form>
-	    
-	    <div class="existing_acount"> Forget your Password? 
-		    <a href="{{ url_for('users.password_reset') }}"> Reset </a>
-	    </div>
     </div>
 {% endblock content %}
