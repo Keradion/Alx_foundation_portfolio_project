@@ -26,8 +26,7 @@ class User(db.Model, UserMixin):
     def get_reset_token(self, duration_in_sec=1024):
         """ Return Password Reset Token """
         serializer = Serializer(app.config['SECRET_KEY'], duration_in_sec)
-        token = serializer.dumps({'user_id': (self.id)})
-        return token.decode('utf-8')
+        return serializer.dumps({'user_id': (self.id)}).decode('utf-8')
 
 
     @staticmethod
@@ -36,7 +35,7 @@ class User(db.Model, UserMixin):
         serializer = Serializer(app.config['SECRET_KEY'])
         try:
             user_id = serializer.loads(token)['user_id']
-            return User.query.filter_by(id=user_id)
+            return User.query.filter_by(id=user_id).first()
         except:
             return None
 

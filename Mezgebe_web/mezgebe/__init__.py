@@ -12,13 +12,13 @@ app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_SSL'] = True
 app.config['MAIL_USERNAME'] = 'danielshitaye10@gmail.com'
-app.config['MAIL_PASSWORD'] =64406422
+app.config['MAIL_PASSWORD'] ='jqkp kmxe xpam uxfd'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
-login_manager.login_view = 'login'
-
+login_manager.login_view = 'users.login'
 mail = Mail(app)
+
 
 from mezgebe.main.routes import main
 app.register_blueprint(main)

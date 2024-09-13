@@ -73,10 +73,10 @@ def send_reset_email(user):
                             recipients=[user.email]
                             )
     reset_message.body = f'''Reset Your Password.
-    {url_for('password_reset', token=token, _external=True)}
+    {url_for('users.password_change', token=token, _external=True)}
     click on the link attached.'''
 
-    mail.send(reset_message.encode('utf-8'))
+    mail.send(reset_message)
 
 
 
@@ -96,9 +96,9 @@ def password_reset():
 
 
 @users.route('/reset_password/<token>',  methods=['GET', 'POST'])
-def password_change():
+def password_change(token):
     """ A Route To Handle a Password Change Process """
-    if current_user.is_authenicated:
+    if current_user.is_authenticated:
         return redirect(url_for('main.home'))
 
     user = User.verify_token(token)
