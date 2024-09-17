@@ -1,12 +1,15 @@
 {% extends 'layout.html' %}
 {% block content %}
-  <p> Expense Amount </p>
+
+<div class="mx-auto" style="width: 300px;">
+  <p class="h3"> Expense Amount </p>
   <p> {{expense.amount}} </p>
-  <p> Reason of Expense </p>
+  <p class="h3"> Reason of Expense </p>
   <p> {{expense.description}} </p>
   <P> {{expense.date.strftime('%Y-%m-%d')}} </p>
   <a href="{{ url_for('expenses.update_expense', expense_id=expense.id) }}">
-	  <button>UPDATE</button></a>
+	 <button class="btn btn-dark">UPDATE</button></a>
   <a href="{{ url_for('expenses.delete_expense', expense_id=expense.id) }}">
-	  <button>DELETE</button></a>
+	  <button class="btn btn-dark">DELETE</button></a>
+</div>
 {% endblock content %}

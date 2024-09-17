@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+{% block content %}
+<table class="table table-hover table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Expense Id</th>
+      <th scope="col">Amount</th>
+      <th scope="col">Reason</th>
+      <th scope="col">Date</th>
+      <th scope="col">Manage Expense</th>
+    </tr>
+  </thead>
+  <tbody>
+	{% for expense in expenses %}
+	<tr>
+		<th scope="row">{{ expense.id }}</th>
+		<td>{{ expense.amount }}</td>
+		<td>{{ expense.description }}</td>
+		<td>{{ expense.date.strftime('%Y-%m-%d')}} </td>
+		<td> <a href="{{ url_for('expenses.expense', expense_id=expense.id) }}"
+				> Manage </a>
+		</td>
+	</tr>
+	{% endfor %}
+  </tbody>
+</table>
+{% endblock content %}

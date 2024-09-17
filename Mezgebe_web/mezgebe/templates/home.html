@@ -1,12 +1,51 @@
 {% extends 'layout.html' %}
 {% block content %}
-        {% for expense in expenses %}
-	<p> Expense Amount </p>
-	<p> {{expense.amount}}</p>
-	<p> Reason of Expense </p>
-	<p> {{expense.description}} </p>
-	<P> {{expense.date.strftime('%Y-%m-%d')}} </a></p>
-	<P> <a href="{{ url_for('expenses.expense', expense_id=expense.id) }}"
-		> Manage Expense </a> <p>
+
+ <nav class="navbar navbar navbar-expand-md navbar-light fixed-top">
+
+          <li class="nav-item active">
+             <a  class="button btn btn-dark"
+                style="margin-left: 1100px; border:none; padding-left:20px; padding-right:20px;"
+                href="{{url_for('expenses.add_expense')}}">
+                     Create Expense <span class="sr-only">(current)</span> </a>
+          </li>
+	  <li class="nav-item">
+             <a  class="button btn btn-dark"
+                style="margin-left: 0px; border:none; padding-left:20px; padding-right:20px;"
+                href="{{url_for('users.logout')}}">
+                     Logout <span class="sr-only">(current)</span> </a>
+	  </li>
+ </nav>
+    <table class="table table-hover table-striped">
+	    <thead class="thead-dark">
+		    <tr>
+			    <th scope="col">Expense Id</th>
+			    <th scope="col">Amount</th>
+			    <th scope="col">Reason</th>
+			    <th scope="col">Date</th>
+			    <th scope="col">Manage Expense</th>
+		    </tr>
+	    </thead>
+<tbody>
+	{% if expense=='exit' %}
+	{% for expense in expenses %}
+	<tr>
+		<th scope="row">{{ expense.id }}</th>
+		<td>{{ expense.amount }}</td>
+		<td>{{ expense.description }}</td>
+		<td>{{ expense.date.strftime('%Y-%m-%d')}} </td>
+		<td> <a href="{{ url_for('expenses.expense', expense_id=expense.id) }}"
+				> Manage </a>
+		</td>
+	</tr>
 	{% endfor %}
+
+	{% else %}
+	<p> No Expense History Availaible
+	<a href="{{url_for('expenses.add_expense')}}">Create New Expense</a>
+	</P>
+	{% endif %}
+  </tbody>
+</table>
+</div>
 {% endblock content %}

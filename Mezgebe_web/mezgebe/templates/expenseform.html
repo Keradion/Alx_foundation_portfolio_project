@@ -1,11 +1,13 @@
 {% extends 'layout.html' %}
 {% block content %}
-    <div class="register_form">
+    <div class="mx-auto" style="width:300px;">
 	    <form method="POST" action="">
 		    {{ form.hidden_tag() }}
 		    <fieldset class="fields">
 			    <legend class="legends" style=color:red> 
-				    Add New Expense  
+				    <p class="h3" style="color:black">
+						 New Expense  
+				    </p>
 			</legend>
 		<div class="fileds" style=margin-bottom:10px>
 			 {{ form.amount.label(class="form-fileds") }}
@@ -38,7 +40,7 @@
                 </div>
 
 		<div class="fileds">
-                        {{ form.submit_button(class="form-fields") }}
+                        {{ form.submit_button(class="btn btn-dark") }}
                 </div>
 
 		    </fieldset>

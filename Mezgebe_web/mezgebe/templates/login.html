@@ -1,51 +1,62 @@
 {% extends 'layout.html' %}
 {% block content %}
-    <div class="register_form">
+
+<div class="container"  style="margin-bottom: 130px;">
+<nav class="navbar navbar navbar-expand-md navbar-light fixed-top">
+	<a class="navbar-brand" href="{{url_for('main.home') }}">Mezgebe</a>
+</nav>
+</div>
+
+    <div class="mx-auto" style="width: 500px;">
 	    <form method="POST" action="">
 		    {{ form.hidden_tag() }}
 		    <fieldset class="fields">
-			    <legend class="legends" style=color:red> 
+			    <legend class="legends h3" style=color:black> 
 				    Login  
 			</legend>
-		<div class="fileds">
-			 {{ form.email.label(class="form-fileds") }}
+		<div class="form-group">
+			 {{ form.email.label(class="form") }}
 
                         {% if form.email.errors %}
                             <div>
-                                 {{ form.email(class="form-fields is-invalid") }}
+                                 {{ form.email(class="form-control-sm is-invalid") }}
                                  {% for error in form.email.errors %}
                                  <span> {{ error }} </span>
                                  {% endfor %}
                          </div>
                         {% else %}
-                           {{ form.email(class="form-fields") }}
+                           {{ form.email(class="form-control-sm") }}
                          {% endif %}
                 </div>
 
-		<div class="fileds">
-			  {{ form.password.label(class="form-fileds") }}
+		<div class="form-group">
+			  {{ form.password.label(class="form") }}
 
                         {% if form.password.errors %}
                             <div>
-                                 {{ form.password(class="form-fields is-invalid") }}
+                                 {{ form.password(class="form-control-sm is-invalid") }}
                                  {% for error in form.password.errors %}
                                  <span> {{ error }} </span>
                                  {% endfor %}
                          </div>
                         {% else %}
-                           {{ form.password(class="form-fields") }}
+                           {{ form.password(class="form-control-sm") }}
                          {% endif %}
                 </div>
 
-		<div class="fileds">
-                        {{ form.submit_button(class="form-fields") }}
+		<div class="form-group">
+                        {{ form.submit_button(class="btn btn-dark") }}
                 </div>
 
 		    </fieldset>
-	    </form>
-	    
-	    <div class="existing_acount"> Forget your Password? 
-		    <a href="{{ url_for('users.password_reset') }}"> Reset </a>
+	    </form> 
+	    <div class="existing_acount"> Forget Your Password? 
+		    <a href="{{ url_for('users.password_reset') }}"> Reset password </a>
 	    </div>
+
+	     <div> Do not you have an Account?
+                    <a href="{{ url_for('users.register') }}"> Create new account </a>
+            </div>
+
     </div>
 {% endblock content %}

@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+{% block content %}
+        {% for expense in expenses %}
+	
+	<div class="container" style=padding-bottom:10px;>
+		<h5 class="bg-light"> Expense Amount </h5>
+		<p class="text-dark"> {{expense.amount}}</p>
+		<h5 class="bg-light"> Reason of Expense </h5>
+		<p class="text-dark"> {{expense.description}} </p>
+		<P> {{expense.date.strftime('%Y-%m-%d')}} </a></p>
+	<a href="{{ url_for('expenses.expense', expense_id=expense.id) }}"
+		class="btn btn-dark"> Manage Expense</a>
+	</div>
+	{% endfor %}
+{% endblock content %}

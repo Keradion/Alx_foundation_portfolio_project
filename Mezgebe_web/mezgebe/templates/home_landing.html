@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+{% block content %}
+<nav class="navbar navbar navbar-expand-md navbar-light fixed-top">
+  <a class="navbar-brand" href="#">Mezgebe</a>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+	     <a  class="button btn btn-dark" 
+		style="margin-left:1100px; padding-left:20px; padding-right:20px; " 
+		href="{{url_for('users.login')}}">
+		     Login <span class="sr-only">(current)</span> </a>
+      </li>
+      <li class="nav-item">
+	      <a class="button btn btn-dark" style="margin-left:35px; padding-left:20px; padding-right:20px; " href="{{ url_for('users.register') }}">		
+		Register </a>      
+      </li>
+  </div>
+</nav>
+{% endblock content %}
