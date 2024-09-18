@@ -10,8 +10,12 @@ main = Blueprint('main', __name__)
 def home():
     """ A Route To Handle Home Page For a User """
     if current_user.is_authenticated:
+        counter = 0
+        expense = ''
         expenses = Expense.query.filter_by(user_id=current_user.id).all()
-        return render_template('home.html', expenses=expenses, title='Home Page')
+        if expenses:
+            expense = 'exit'
+        return render_template(
+                'home.html', expense=expense, expenses=expenses, title='Home Page', counter=counter)
     else:
-        return 'welcome'
-
+        return render_template('home_landing.html')

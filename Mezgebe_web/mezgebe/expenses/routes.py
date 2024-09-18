@@ -18,7 +18,7 @@ def add_expense():
                               user_id=current_user.id)
         db.session.add(new_expense)
         db.session.commit()
-        flash('New Expense Added Successfully', 'success')
+        flash('New expense added successfully', 'success')
         return redirect(url_for('main.home'))
     return render_template('expenseform.html', form=new_expense_form)
 
@@ -44,7 +44,7 @@ def update_expense(expense_id):
         expense[0].amount = new_expense_form.amount.data
         expense[0].description = new_expense_form.description.data
         db.session.commit()
-        flash('Your Expense has been updated successfully!', 'success')
+        flash('Expense has been updated successfully!', 'success')
         return redirect(url_for('expenses.expense', expense_id=expense[0].id))
     elif request.method == 'GET':
         new_expense_form.amount.data = expense[0].amount
@@ -62,5 +62,5 @@ def delete_expense(expense_id):
         abort(403)
     db.session.delete(expense[0])
     db.session.commit()
-    flash('Your Expense has been Deleted successfully!', 'success')
+    flash('Expense has been deleted successfully!', 'success')
     return redirect(url_for('main.home'))

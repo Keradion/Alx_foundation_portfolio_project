@@ -49,9 +49,9 @@ class UserLoginForm(FlaskForm):
 
        - Extends FlaskForm
     """
-    email = StringField('Email',
+    email = StringField('Email address',
                         validators=[DataRequired(), Email()])
-    password = PasswordField('New Password',validators=[DataRequired()])
+    password = PasswordField('Password',validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
     submit_button = SubmitField('Login')
 

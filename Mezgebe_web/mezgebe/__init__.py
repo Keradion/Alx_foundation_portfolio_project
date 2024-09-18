@@ -3,28 +3,34 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
+from mezgebe.config import Config
 
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = '15acbc2e1b59e2e04cb76ed5a2c9b9f3'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USE_SSL'] = True
-app.config['MAIL_USERNAME'] = 'danielshitaye10@gmail.com'
-app.config['MAIL_PASSWORD'] ='jqkp kmxe xpam uxfd'
-db = SQLAlchemy(app)
-bcrypt = Bcrypt(app)
-login_manager = LoginManager(app)
+db = SQLAlchemy()
+bcrypt = Bcrypt()
+login_manager = LoginManager()
 login_manager.login_view = 'users.login'
-mail = Mail(app)
+mail = Mail()
 
 
-from mezgebe.main.routes import main
-app.register_blueprint(main)
+def create_app(config_class=Config):
+    """
+       Application Factory 
+    """
+    app = Flask(__name__)
+    app.config.from_object(Config)
+    
+    db.init_app(app)
+    bcrypt.init_app(app)        
+    login_manager.init_app(app)
+    mail.init_app(app)
 
-from mezgebe.users.routes import users
-app.register_blueprint(users)
+    from mezgebe.main.routes import main
+    from mezgebe.users.routes import users
+    from mezgebe.expenses.routes import expenses
 
-from mezgebe.expenses.routes import expenses
-app.register_blueprint(expenses)
+    app.register_blueprint(main)
+    app.register_blueprint(users)
+    app.register_blueprint(expenses)
+
+    return app

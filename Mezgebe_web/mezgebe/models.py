@@ -1,5 +1,5 @@
 from datetime import datetime
-from mezgebe import db, login_manager, app
+from mezgebe import db, login_manager
 from flask_login import UserMixin
 from uuid import uuid4
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -25,14 +25,14 @@ class User(db.Model, UserMixin):
 
     def get_reset_token(self, duration_in_sec=1024):
         """ Return Password Reset Token """
-        serializer = Serializer(app.config['SECRET_KEY'], duration_in_sec)
+        serializer = Serializer(current_app.config['SECRET_KEY'], duration_in_sec)
         return serializer.dumps({'user_id': (self.id)}).decode('utf-8')
 
 
     @staticmethod
     def verify_token(token):
         """ Verify Reset Token validity """
-        serializer = Serializer(app.config['SECRET_KEY'])
+        serializer = Serializer(current_app.config['SECRET_KEY'])
         try:
             user_id = serializer.loads(token)['user_id']
             return User.query.filter_by(id=user_id).first()

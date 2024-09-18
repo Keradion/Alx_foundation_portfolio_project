@@ -1,5 +1,5 @@
 from flask import Blueprint
-from mezgebe import app, db, bcrypt, mail
+from mezgebe import db, bcrypt, mail
 from mezgebe.models import User, Expense
 from flask import render_template, flash, redirect, url_for, abort, request
 from mezgebe.users.forms import UserRegisterationForm, UserLoginForm, PasswordResetForm, PasswordChangeForm
