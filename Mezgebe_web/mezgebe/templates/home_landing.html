@@ -2,18 +2,18 @@
 {% block content %}
 <nav class="navbar navbar navbar-expand-md navbar-light fixed-top">
   <a class="navbar-brand" href="#">Mezgebe</a>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-	     <a  class="button btn btn-dark" 
-		style="margin-left:1100px; padding-left:20px; padding-right:20px; " 
-		href="{{url_for('users.login')}}">
-		     Login <span class="sr-only">(current)</span> </a>
-      </li>
-      <li class="nav-item">
-	      <a class="button btn btn-dark" style="margin-left:35px; padding-left:20px; padding-right:20px; " href="{{ url_for('users.register') }}">		
-		Register </a>      
-      </li>
-  </div>
 </nav>
+
+<div style="padding-top: 30px;">
+	<p class="h1" style="margin-left:300px;"> Mezgebe Expense Tracker <p>
+	<div style="padding-top: 55px; margin-left:400px;">
+		<a  class="button btn btn-dark"
+                style="padding-left:20px; padding-right:20px; "
+                href="{{url_for('users.login')}}">
+                     Login <span class="sr-only">(current)</span> 
+	</a>
+	<a class="button btn btn-dark" style="margin-left:35px; padding-left:20px; padding-right:20px; " href="{{ url_for('users.register') }}">
+                Register </a>
+	</div>
+</div>
 {% endblock content %}
