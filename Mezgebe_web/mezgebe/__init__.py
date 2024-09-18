@@ -18,7 +18,7 @@ def create_app(config_class=Config):
        Application Factory 
     """
     app = Flask(__name__)
-    app.config.from_object(Config)
+    app.config.from_object(config_class)
     
     db.init_app(app)
     bcrypt.init_app(app)        

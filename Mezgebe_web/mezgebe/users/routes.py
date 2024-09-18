@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, current_app
 from mezgebe import db, bcrypt, mail
 from mezgebe.models import User, Expense
 from flask import render_template, flash, redirect, url_for, abort, request

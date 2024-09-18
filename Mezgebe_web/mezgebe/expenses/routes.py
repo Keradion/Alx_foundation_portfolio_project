@@ -1,5 +1,5 @@
 from mezgebe import db 
-from flask import render_template, flash, redirect, url_for, abort, request, Blueprint
+from flask import render_template, flash, redirect, url_for, abort, request, Blueprint, current_app
 from mezgebe.expenses.forms import NewExpenseForm
 from mezgebe.models import Expense, User
 from flask_login import current_user, login_required

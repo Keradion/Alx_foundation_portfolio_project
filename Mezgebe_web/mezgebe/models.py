@@ -3,7 +3,7 @@ from mezgebe import db, login_manager
 from flask_login import UserMixin
 from uuid import uuid4
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
-
+from flask import current_app
 
 @login_manager.user_loader
 def load_user(user_id):

@@ -1,3 +1,4 @@
+from flask import current_app
 from mezgebe.models import User
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
